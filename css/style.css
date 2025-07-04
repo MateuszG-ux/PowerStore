@@ -606,3 +606,72 @@ footer {
     min-width: 100%;
   }
 }
+
+@media (max-width: 768px) {
+  .slider-track {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .slider-item {
+    min-width: 90vw; /* zamiast 350px, zajmie niemal cały ekran */
+    margin: 10px 0;
+  }
+
+  .oferta-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+    max-width: 100%;
+  }
+
+  .oferta-item img {
+    width: 100%;
+    height: auto;
+  }
+
+  .slider-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .slider-btn {
+    width: 38px;
+    height: 70px;
+  }
+
+  .kontakt-container {
+    flex-direction: column;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-text h2 {
+    font-size: 28px;
+  }
+
+  .hero-text p {
+    font-size: 16px;
+  }
+
+  .hero-text {
+    top: 60%;
+    max-width: 95vw;
+    padding: 0 10px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav li {
+    border-right: none;
+    padding: 10px 0;
+  }
+
+  .container {
+    padding: 0 10px;
+    max-width: 100%;
+  }
+}
