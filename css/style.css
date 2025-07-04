@@ -701,3 +701,52 @@ footer {
     max-width: 100%;
   }
 }
+
+/* Ukryj hamburger na desktopie */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  width: 25px;
+  height: 20px;
+  justify-content: space-between;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  background-color: #333;
+  border-radius: 2px;
+}
+
+/* Styl mobilny */
+@media (max-width: 768px) {
+  /* Ukryj menu na start na mobilkach */
+  nav ul {
+    display: none;
+    flex-direction: column;
+    background: white;
+    position: absolute;
+    top: 60px; /* dopasuj do wysokości headera */
+    right: 20px;
+    width: 150px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  /* Pokaż menu po kliknięciu */
+  nav ul.active {
+    display: flex;
+  }
+
+  /* Pokaż hamburger */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Navbar nie jest przyklejony na mobilkach */
+  header {
+    position: relative;
+  }
+}
