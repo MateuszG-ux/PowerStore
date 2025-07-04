@@ -27,7 +27,6 @@ document.querySelectorAll('nav a[href^="#"]').forEach(link => {
     if (targetElem) {
       const elemRect = targetElem.getBoundingClientRect();
       const elemTop = window.scrollY + elemRect.top;
-      // Przewiń tak, by zostawić 40px odstępu od góry
       const scrollTo = elemTop - 40;
       window.scrollTo({
         top: scrollTo,
@@ -37,29 +36,22 @@ document.querySelectorAll('nav a[href^="#"]').forEach(link => {
   });
 });
 
-// --- SLIDER GALERII W PĘTLI Z OBSŁUGĄ SWIPE ---
+// --- SLIDER GALERII W PĘTLI I OBSŁUGĄ DOTYKU ---
 
 const galSliderTrack = document.querySelector('.galeria .slider-track');
 const galSliderItemsOriginal = document.querySelectorAll('.galeria .slider-item');
 const galLeftBtn = document.querySelector('.galeria .left-btn');
 const galRightBtn = document.querySelector('.galeria .right-btn');
 
-const galVisibleCount = 3;
+const galVisibleCount = 3; // liczba widocznych elementów
 
-// Dynamiczne pobranie szerokości elementu (wliczając margines)
-const galItemWidth = galSliderItemsOriginal[0].offsetWidth + 10; // 10px margines, dostosuj jeśli inny
-
-let galCurrentIndex = galVisibleCount; // start od pierwszego elementu po klonach
-
-// Klonowanie elementów dla efektu pętli
+// Klonowanie elementów na potrzeby efektu pętli
 function cloneItems() {
-  // Klon ostatnich na początek
   for (let i = galSliderItemsOriginal.length - galVisibleCount; i < galSliderItemsOriginal.length; i++) {
     const clone = galSliderItemsOriginal[i].cloneNode(true);
     clone.classList.add('clone');
     galSliderTrack.prepend(clone);
   }
-  // Klon pierwszych na koniec
   for (let i = 0; i < galVisibleCount; i++) {
     const clone = galSliderItemsOriginal[i].cloneNode(true);
     clone.classList.add('clone');
@@ -68,23 +60,40 @@ function cloneItems() {
 }
 cloneItems();
 
-const galSliderItems = document.querySelectorAll('.galeria .slider-item'); // już z klonami
+const galSliderItems = document.querySelectorAll('.galeria .slider-item');
 
-// Ustawienie szerokości tracka
-galSliderTrack.style.width = `${galSliderItems.length * galItemWidth}px`;
-// Startowa pozycja slidera
-galSliderTrack.style.transform = `translateX(${-galCurrentIndex * galItemWidth}px)`;
-
-// Blokada podczas animacji
+let galCurrentIndex = galVisibleCount;
 let isSliding = false;
 
+// Pobierz dynamicznie szerokość elementu (szerokość + margin)
+function getItemWidth() {
+  const style = getComputedStyle(galSliderItems[0]);
+  return galSliderItems[0].offsetWidth + parseInt(style.marginRight);
+}
+
+// Ustaw szerokość tracka zależną od ilości elementów i szerokości pojedynczego
+function setTrackWidth() {
+  galSliderTrack.style.width = `${galSliderItems.length * getItemWidth()}px`;
+}
+
+// Ustaw początkową pozycję slidera
+function setInitialPosition() {
+  galSliderTrack.style.transition = 'none';
+  galCurrentIndex = galVisibleCount;
+  galSliderTrack.style.transform = `translateX(${-galCurrentIndex * getItemWidth()}px)`;
+}
+
+setTrackWidth();
+setInitialPosition();
+
+// Przesunięcie slidera do wybranego indeksu z animacją
 function slideToIndex(newIndex) {
   if (isSliding) return;
   isSliding = true;
 
   galSliderTrack.style.transition = 'transform 0.4s ease';
   galCurrentIndex = newIndex;
-  galSliderTrack.style.transform = `translateX(${-galCurrentIndex * galItemWidth}px)`;
+  galSliderTrack.style.transform = `translateX(${-galCurrentIndex * getItemWidth()}px)`;
 
   galSliderTrack.addEventListener('transitionend', handleTransitionEnd);
 }
@@ -94,16 +103,17 @@ function handleTransitionEnd() {
 
   if (galCurrentIndex >= galSliderItems.length - galVisibleCount) {
     galCurrentIndex = galVisibleCount;
-    galSliderTrack.style.transform = `translateX(${-galCurrentIndex * galItemWidth}px)`;
+    galSliderTrack.style.transform = `translateX(${-galCurrentIndex * getItemWidth()}px)`;
   } else if (galCurrentIndex < galVisibleCount) {
     galCurrentIndex = galSliderItems.length - 2 * galVisibleCount;
-    galSliderTrack.style.transform = `translateX(${-galCurrentIndex * galItemWidth}px)`;
+    galSliderTrack.style.transform = `translateX(${-galCurrentIndex * getItemWidth()}px)`;
   }
 
   isSliding = false;
   galSliderTrack.removeEventListener('transitionend', handleTransitionEnd);
 }
 
+// Obsługa kliknięć w przyciski
 galLeftBtn.addEventListener('click', () => {
   slideToIndex(galCurrentIndex - 1);
 });
@@ -112,43 +122,49 @@ galRightBtn.addEventListener('click', () => {
   slideToIndex(galCurrentIndex + 1);
 });
 
-// --- OBSŁUGA SWIPE NA MOBILKACH ---
+// --- OBSŁUGA DOTYKU (TOUCH) ---
 
 let startX = 0;
+let currentTranslate = 0;
+let prevTranslate = 0;
 let isDragging = false;
 
-galSliderTrack.addEventListener('touchstart', (e) => {
-  startX = e.touches[0].clientX;
+galSliderTrack.addEventListener('touchstart', touchStart);
+galSliderTrack.addEventListener('touchmove', touchMove);
+galSliderTrack.addEventListener('touchend', touchEnd);
+
+function touchStart(event) {
+  if (isSliding) return;
+  startX = event.touches[0].clientX;
+  prevTranslate = -galCurrentIndex * getItemWidth();
   isDragging = true;
-  galSliderTrack.style.transition = 'none'; // usuń transition by animować ręcznie (opcjonalnie)
-});
+  galSliderTrack.style.transition = 'none';
+}
 
-galSliderTrack.addEventListener('touchmove', (e) => {
+function touchMove(event) {
   if (!isDragging) return;
-  const currentX = e.touches[0].clientX;
-  const diffX = currentX - startX;
+  const currentX = event.touches[0].clientX;
+  const diff = currentX - startX;
+  currentTranslate = prevTranslate + diff;
+  galSliderTrack.style.transform = `translateX(${currentTranslate}px)`;
+}
 
-  // Możesz odkomentować, by slider podążał za palcem podczas przeciągania:
-  // galSliderTrack.style.transform = `translateX(${-galCurrentIndex * galItemWidth + diffX}px)`;
-});
-
-galSliderTrack.addEventListener('touchend', (e) => {
+function touchEnd() {
   if (!isDragging) return;
   isDragging = false;
-  const endX = e.changedTouches[0].clientX;
-  const diffX = endX - startX;
+  const movedBy = currentTranslate - prevTranslate;
 
-  const swipeThreshold = 50; // minimalna odległość swipe w px
-
-  if (diffX > swipeThreshold) {
-    // Swipe w prawo - pokaz poprzedni
-    slideToIndex(galCurrentIndex - 1);
-  } else if (diffX < -swipeThreshold) {
-    // Swipe w lewo - pokaz następny
+  if (movedBy < -50) {
     slideToIndex(galCurrentIndex + 1);
+  } else if (movedBy > 50) {
+    slideToIndex(galCurrentIndex - 1);
   } else {
-    // Za mały ruch - wróć do aktualnej pozycji
-    galSliderTrack.style.transition = 'transform 0.3s ease';
-    galSliderTrack.style.transform = `translateX(${-galCurrentIndex * galItemWidth}px)`;
+    slideToIndex(galCurrentIndex);
   }
+}
+
+// Dostosowanie slidera po zmianie rozmiaru okna
+window.addEventListener('resize', () => {
+  setTrackWidth();
+  setInitialPosition();
 });
