@@ -27,7 +27,7 @@ document.querySelectorAll('nav a[href^="#"]').forEach(link => {
     if (targetElem) {
       const elemRect = targetElem.getBoundingClientRect();
       const elemTop = window.scrollY + elemRect.top;
-      // Przewiń tak, by zostawić 20px odstępu od góry
+      // Przewiń tak, by zostawić 40px odstępu od góry
       const scrollTo = elemTop - 40;
       window.scrollTo({
         top: scrollTo,
@@ -37,8 +37,7 @@ document.querySelectorAll('nav a[href^="#"]').forEach(link => {
   });
 });
 
-
-// --- SLIDER GALERII W PĘTLI ---
+// --- SLIDER GALERII W PĘTLI Z OBSŁUGĄ SWIPE ---
 
 const galSliderTrack = document.querySelector('.galeria .slider-track');
 const galSliderItemsOriginal = document.querySelectorAll('.galeria .slider-item');
@@ -46,7 +45,9 @@ const galLeftBtn = document.querySelector('.galeria .left-btn');
 const galRightBtn = document.querySelector('.galeria .right-btn');
 
 const galVisibleCount = 3;
-const galItemWidth = 370; // 330px zdjęcie + marginesy (dostosuj jeśli trzeba)
+
+// Dynamiczne pobranie szerokości elementu (wliczając margines)
+const galItemWidth = galSliderItemsOriginal[0].offsetWidth + 10; // 10px margines, dostosuj jeśli inny
 
 let galCurrentIndex = galVisibleCount; // start od pierwszego elementu po klonach
 
@@ -109,4 +110,45 @@ galLeftBtn.addEventListener('click', () => {
 
 galRightBtn.addEventListener('click', () => {
   slideToIndex(galCurrentIndex + 1);
+});
+
+// --- OBSŁUGA SWIPE NA MOBILKACH ---
+
+let startX = 0;
+let isDragging = false;
+
+galSliderTrack.addEventListener('touchstart', (e) => {
+  startX = e.touches[0].clientX;
+  isDragging = true;
+  galSliderTrack.style.transition = 'none'; // usuń transition by animować ręcznie (opcjonalnie)
+});
+
+galSliderTrack.addEventListener('touchmove', (e) => {
+  if (!isDragging) return;
+  const currentX = e.touches[0].clientX;
+  const diffX = currentX - startX;
+
+  // Możesz odkomentować, by slider podążał za palcem podczas przeciągania:
+  // galSliderTrack.style.transform = `translateX(${-galCurrentIndex * galItemWidth + diffX}px)`;
+});
+
+galSliderTrack.addEventListener('touchend', (e) => {
+  if (!isDragging) return;
+  isDragging = false;
+  const endX = e.changedTouches[0].clientX;
+  const diffX = endX - startX;
+
+  const swipeThreshold = 50; // minimalna odległość swipe w px
+
+  if (diffX > swipeThreshold) {
+    // Swipe w prawo - pokaz poprzedni
+    slideToIndex(galCurrentIndex - 1);
+  } else if (diffX < -swipeThreshold) {
+    // Swipe w lewo - pokaz następny
+    slideToIndex(galCurrentIndex + 1);
+  } else {
+    // Za mały ruch - wróć do aktualnej pozycji
+    galSliderTrack.style.transition = 'transform 0.3s ease';
+    galSliderTrack.style.transform = `translateX(${-galCurrentIndex * galItemWidth}px)`;
+  }
 });
