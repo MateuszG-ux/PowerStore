@@ -154,8 +154,17 @@ if (isTouchDevice()) {
 }
 
 const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('nav ul');
+const navLinks = document.querySelector('nav ul.nav-links');
 
 hamburger.addEventListener('click', () => {
   navLinks.classList.toggle('active');
+  hamburger.classList.toggle('active');
+});
+
+// Zamknij menu po kliknięciu linku
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('active');
+    hamburger.classList.remove('active');
+  });
 });
