@@ -27,6 +27,7 @@ document.querySelectorAll('nav a[href^="#"]').forEach(link => {
     if (targetElem) {
       const elemRect = targetElem.getBoundingClientRect();
       const elemTop = window.scrollY + elemRect.top;
+      // Przewiń tak, by zostawić 20px odstępu od góry
       const scrollTo = elemTop - 40;
       window.scrollTo({
         top: scrollTo,
@@ -36,22 +37,28 @@ document.querySelectorAll('nav a[href^="#"]').forEach(link => {
   });
 });
 
-// --- SLIDER GALERII W PĘTLI I OBSŁUGĄ DOTYKU ---
+
+// --- SLIDER GALERII W PĘTLI ---
 
 const galSliderTrack = document.querySelector('.galeria .slider-track');
 const galSliderItemsOriginal = document.querySelectorAll('.galeria .slider-item');
 const galLeftBtn = document.querySelector('.galeria .left-btn');
 const galRightBtn = document.querySelector('.galeria .right-btn');
 
-const galVisibleCount = 3; // liczba widocznych elementów
+const galVisibleCount = 3;
+const galItemWidth = 370; // 330px zdjęcie + marginesy (dostosuj jeśli trzeba)
 
-// Klonowanie elementów na potrzeby efektu pętli
+let galCurrentIndex = galVisibleCount; // start od pierwszego elementu po klonach
+
+// Klonowanie elementów dla efektu pętli
 function cloneItems() {
+  // Klon ostatnich na początek
   for (let i = galSliderItemsOriginal.length - galVisibleCount; i < galSliderItemsOriginal.length; i++) {
     const clone = galSliderItemsOriginal[i].cloneNode(true);
     clone.classList.add('clone');
     galSliderTrack.prepend(clone);
   }
+  // Klon pierwszych na koniec
   for (let i = 0; i < galVisibleCount; i++) {
     const clone = galSliderItemsOriginal[i].cloneNode(true);
     clone.classList.add('clone');
@@ -60,40 +67,23 @@ function cloneItems() {
 }
 cloneItems();
 
-const galSliderItems = document.querySelectorAll('.galeria .slider-item');
+const galSliderItems = document.querySelectorAll('.galeria .slider-item'); // już z klonami
 
-let galCurrentIndex = galVisibleCount;
+// Ustawienie szerokości tracka
+galSliderTrack.style.width = `${galSliderItems.length * galItemWidth}px`;
+// Startowa pozycja slidera
+galSliderTrack.style.transform = `translateX(${-galCurrentIndex * galItemWidth}px)`;
+
+// Blokada podczas animacji
 let isSliding = false;
 
-// Pobierz dynamicznie szerokość elementu (szerokość + margin)
-function getItemWidth() {
-  const style = getComputedStyle(galSliderItems[0]);
-  return galSliderItems[0].offsetWidth + parseInt(style.marginRight);
-}
-
-// Ustaw szerokość tracka zależną od ilości elementów i szerokości pojedynczego
-function setTrackWidth() {
-  galSliderTrack.style.width = `${galSliderItems.length * getItemWidth()}px`;
-}
-
-// Ustaw początkową pozycję slidera
-function setInitialPosition() {
-  galSliderTrack.style.transition = 'none';
-  galCurrentIndex = galVisibleCount;
-  galSliderTrack.style.transform = `translateX(${-galCurrentIndex * getItemWidth()}px)`;
-}
-
-setTrackWidth();
-setInitialPosition();
-
-// Przesunięcie slidera do wybranego indeksu z animacją
 function slideToIndex(newIndex) {
   if (isSliding) return;
   isSliding = true;
 
   galSliderTrack.style.transition = 'transform 0.4s ease';
   galCurrentIndex = newIndex;
-  galSliderTrack.style.transform = `translateX(${-galCurrentIndex * getItemWidth()}px)`;
+  galSliderTrack.style.transform = `translateX(${-galCurrentIndex * galItemWidth}px)`;
 
   galSliderTrack.addEventListener('transitionend', handleTransitionEnd);
 }
@@ -103,17 +93,16 @@ function handleTransitionEnd() {
 
   if (galCurrentIndex >= galSliderItems.length - galVisibleCount) {
     galCurrentIndex = galVisibleCount;
-    galSliderTrack.style.transform = `translateX(${-galCurrentIndex * getItemWidth()}px)`;
+    galSliderTrack.style.transform = `translateX(${-galCurrentIndex * galItemWidth}px)`;
   } else if (galCurrentIndex < galVisibleCount) {
     galCurrentIndex = galSliderItems.length - 2 * galVisibleCount;
-    galSliderTrack.style.transform = `translateX(${-galCurrentIndex * getItemWidth()}px)`;
+    galSliderTrack.style.transform = `translateX(${-galCurrentIndex * galItemWidth}px)`;
   }
 
   isSliding = false;
   galSliderTrack.removeEventListener('transitionend', handleTransitionEnd);
 }
 
-// Obsługa kliknięć w przyciski
 galLeftBtn.addEventListener('click', () => {
   slideToIndex(galCurrentIndex - 1);
 });
@@ -122,49 +111,44 @@ galRightBtn.addEventListener('click', () => {
   slideToIndex(galCurrentIndex + 1);
 });
 
-// --- OBSŁUGA DOTYKU (TOUCH) ---
-
-let startX = 0;
-let currentTranslate = 0;
-let prevTranslate = 0;
-let isDragging = false;
-
-galSliderTrack.addEventListener('touchstart', touchStart);
-galSliderTrack.addEventListener('touchmove', touchMove);
-galSliderTrack.addEventListener('touchend', touchEnd);
-
-function touchStart(event) {
-  if (isSliding) return;
-  startX = event.touches[0].clientX;
-  prevTranslate = -galCurrentIndex * getItemWidth();
-  isDragging = true;
-  galSliderTrack.style.transition = 'none';
+// Funkcja sprawdzająca, czy urządzenie ma touch
+function isTouchDevice() {
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 }
 
-function touchMove(event) {
-  if (!isDragging) return;
-  const currentX = event.touches[0].clientX;
-  const diff = currentX - startX;
-  currentTranslate = prevTranslate + diff;
-  galSliderTrack.style.transform = `translateX(${currentTranslate}px)`;
+if (isTouchDevice()) {
+  // Zmienna do śledzenia drag
+  let startX = 0;
+  let currentTranslate = -galCurrentIndex * galItemWidth;
+  let prevTranslate = currentTranslate;
+  let isDragging = false;
+
+  galSliderTrack.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+    galSliderTrack.style.transition = 'none'; // wyłącz animację na czas drag
+  });
+
+  galSliderTrack.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const currentX = e.touches[0].clientX;
+    const diff = currentX - startX;
+    currentTranslate = prevTranslate + diff;
+    galSliderTrack.style.transform = `translateX(${currentTranslate}px)`;
+  });
+
+  galSliderTrack.addEventListener('touchend', (e) => {
+    isDragging = false;
+    const movedBy = currentTranslate - prevTranslate;
+
+    if (movedBy < -galItemWidth / 2) {
+      slideToIndex(galCurrentIndex + 1);
+    } else if (movedBy > galItemWidth / 2) {
+      slideToIndex(galCurrentIndex - 1);
+    } else {
+      slideToIndex(galCurrentIndex);
+    }
+
+    prevTranslate = -galCurrentIndex * galItemWidth;
+  });
 }
-
-function touchEnd() {
-  if (!isDragging) return;
-  isDragging = false;
-  const movedBy = currentTranslate - prevTranslate;
-
-  if (movedBy < -50) {
-    slideToIndex(galCurrentIndex + 1);
-  } else if (movedBy > 50) {
-    slideToIndex(galCurrentIndex - 1);
-  } else {
-    slideToIndex(galCurrentIndex);
-  }
-}
-
-// Dostosowanie slidera po zmianie rozmiaru okna
-window.addEventListener('resize', () => {
-  setTrackWidth();
-  setInitialPosition();
-});
