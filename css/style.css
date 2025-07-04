@@ -728,7 +728,7 @@ footer {
     top: 60px; /* dostosuj jeśli Twój header ma inną wysokość */
     right: 0;
     background: white;
-    height: calc(100vh - 60px);
+    height: 80vw;
     width: 200px;
     flex-direction: column;
     padding-top: 20px;
