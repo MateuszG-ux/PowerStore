@@ -1,0 +1,608 @@
+/* RESET I PODSTAWY */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fffffa; /* jasne, neutralne */
+  color: #333;
+}
+
+/* KONTENER */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+/* NAGŁÓWEK */
+header {
+  position: sticky;
+  top: 0;
+  background: #111;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  padding: 5px 0;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 0; /* usuwamy gap, bo mamy padding i border */
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  padding: 0 15px;
+  border-right: 3px solid #FF6600; /* pionowa kreska */
+  display: flex;
+  align-items: center;
+}
+
+nav li:last-child {
+  border-right: none; /* ostatni element bez kreski */
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+  font-weight: 600;
+}
+
+nav a:hover {
+  color: #FF4500; /* delikatniejszy czerwony */
+}
+
+.logo-img {
+  height: 75px;
+}
+
+/* BANER / HERO */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background-color: #fffffa; /* bez zmian, ma się zlewać */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-image {
+  position: relative;
+  width: auto;
+  height: 110%;
+  z-index: 1;
+  user-select: none;
+  padding-top: 35px;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.35);
+  z-index: 2;
+}
+
+.hero-text {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  text-align: center;
+  color: white;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.9);
+  max-width: 90vw;
+}
+
+.hero-text h2 {
+  font-size: 42px;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.hero-text p {
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.hero-btn {
+  display: inline-block;
+  background-color: #FF6600; 
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.hero-btn:hover {
+  background-color: #FF4500;
+  cursor: pointer;
+}
+
+/* GALERIA */
+.galeria {
+  background-color: #faf8f6; /* delikatny kremowy odcień, lekko różowy/ciepły */
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.galeria h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 700;
+  color: #FF4500; 
+}
+
+/* Pozostała część galerii bez zmian stylu, delikatne cienie, łagodne przejścia */
+.slider-container {
+  width: 100%;
+  max-width: 1190px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.slider {
+  overflow: hidden;
+  width: 100%;
+  max-width: 1270px;
+  height: 220px;
+  border-radius: 10px;
+  background: transparent;
+}
+
+.slider-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  padding-top: 15px;
+}
+
+.slider-item {
+  min-width: 350px;
+  margin: 0 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  user-select: none;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.slider-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+}
+
+.slider-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.slider-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 8px 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.slider-btn {
+  background-color: #FF6600;
+  border: none;
+  color: white;
+  font-size: 32px;
+  width: 45px;
+  height: 80px;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.slider-btn:hover {
+  background-color: #FF4500;
+}
+
+.left-btn {
+  order: 0;
+}
+
+.right-btn {
+  order: 2;
+}
+
+/* SEKCJA O NAS */
+.o-nas {
+  background: #f3f0ec; /* delikatny, jasny beżowy, ciepły */
+  padding: 80px 20px; /* teraz od góry i dołu */
+  margin: 60px auto; /* dodajemy margin pionowy na zewnątrz, żeby było powietrza */
+  color: #3a3a36;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: 400;
+  max-width: 900px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  letter-spacing: 0.02em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.o-nas h2 {
+  font-weight: 700;
+  font-size: 38px;
+  margin-bottom: 30px;
+  color: #FF4500; 
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+
+.o-nas p {
+  max-width: 720px;
+  margin: 0 auto 20px auto;
+  color: #555;
+  font-weight: 500;
+}
+
+/* SEKCJA OFERTA */
+.oferta {
+  background: #eae6e1; /* subtelny jasny kremowy szary */
+  padding: 60px 20px;
+}
+
+.oferta h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 700;
+  color: #FF4500;
+}
+
+.oferta h3 {
+  font-weight: 700;
+  color: #FF6600;
+}
+
+.oferta h3:hover {
+  color: #FF4500;
+}
+
+/* Ustawienie kafelków pionowo oraz dodanie strzałki po lewej */
+.oferta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px;
+  justify-items: center;
+  max-width: 1200px; /* lub inna szerokość odpowiednia do projektu */
+  margin: 0 auto;
+}
+
+.oferta-item {
+  position: relative;
+  padding: 20px 20px 20px 70px; /* zwiększony padding po lewej na strzałkę */
+  background: #dad6d1;
+  border-radius: 8px;
+  text-align: left;
+  width: 100%;
+  cursor: default;
+  transition: transform 0.3s;
+}
+
+.oferta-item:hover {
+  transform: scale(1.03);
+}
+
+/* Strzałka po lewej */
+.oferta-item .arrow {
+  position: absolute;
+  left: 20px; /* wcześniej było -50px, teraz wewnątrz kafelka */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23FF6600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M9.29 6.71a1 1 0 011.42 0L15 11l-4.29 4.29a1 1 0 01-1.42-1.42L12.17 12 9.29 9.12a1 1 0 010-1.41z"/></svg>');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  transition: background-color 0.3s;
+}
+
+.oferta-item:hover .arrow {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23FF4500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M9.29 6.71a1 1 0 011.42 0L15 11l-4.29 4.29a1 1 0 01-1.42-1.42L12.17 12 9.29 9.12a1 1 0 010-1.41z"/></svg>');
+}
+
+/* Oferta item images */
+.oferta-item img {
+  width: 400px;
+  height: 310px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.oferta-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.oferta-link .oferta-item {
+  cursor: pointer;
+}
+
+/* SEKCJA KONTAKT */
+.kontakt {
+  padding: 60px 20px;
+  background: #f7f6f4; /* bardzo jasny kremowy */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.kontakt-container {
+  display: flex;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto 50px auto;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.kontakt-info {
+  flex: 1 1 300px;
+  max-width: 450px;
+}
+
+.kontakt-info h2 {
+  font-size: 32px;
+  margin-bottom: 25px;
+  color: #FF6600;
+  font-weight: 700;
+}
+
+.kontakt-info p {
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.kontakt-info strong {
+  color: #FF6600;
+}
+
+/* Mapa */
+.kontakt-mapa {
+  flex: 1 1 300px;
+  max-width: 650px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  overflow: hidden;
+  min-height: 300px;
+}
+
+.kontakt-mapa iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* Formularz kontaktowy */
+form#contactForm {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: inherit;
+}
+
+form#contactForm input,
+form#contactForm textarea {
+  padding: 14px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+form#contactForm input:focus,
+form#contactForm textarea:focus {
+  outline: none;
+  border-color: #a23b36;
+  box-shadow: 0 0 8px rgba(162,59,54,0.3);
+}
+
+form#contactForm textarea {
+  min-height: 140px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+form#contactForm button {
+  background-color: #FF6600;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+form#contactForm button:hover {
+  background-color: #FF4500;
+}
+
+/* RESPONSYWNOŚĆ */
+@media (max-width: 768px) {
+  .slider-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .slider-btn {
+    width: 38px;
+    height: 70px;
+  }
+
+  .oferta-grid {
+    max-width: 100%;
+    gap: 20px;
+  }
+
+  .kontakt-container {
+    flex-direction: column;
+    max-width: 90%;
+  }
+}
+
+footer {
+  background-color: #111;
+  color: #ccc;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+}
+
+.footer-column {
+  flex: 1 1 200px;
+  min-width: 180px;
+}
+
+.footer-column h3 {
+  color: #FF6600;
+  font-size: 20px;
+  margin-bottom: 15px;
+  font-weight: 700;
+  border-bottom: 2px solid #FF6600;
+  padding-bottom: 8px;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+  color: #00BFFF;
+  text-decoration: none;
+  transition: color 0.3s;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.footer-column ul li a:hover {
+  color: #FF6600;
+}
+
+.footer-column p {
+  font-size: 15px;
+  margin: 5px 0;
+  color: #00BFFF;
+}
+
+.footer-social {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.footer-social a {
+  color: #00BFFF;
+  font-size: 22px;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-social a:hover {
+  color: #FF6600;
+}
+
+.social-icon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  object-fit: contain;
+}
+
+.footer-bottom {
+  margin-top: 40px;
+  border-top: 1px solid #222;
+  padding-top: 20px;
+  font-size: 13px;
+  text-align: center;
+  color: #00BFFF;
+}
+
+/* Responsywność */
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .footer-column {
+    min-width: 100%;
+  }
+}

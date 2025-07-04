@@ -1,0 +1,250 @@
+/* motocykl - podstrona szczegółów */
+
+body {
+  background-color: #faf8f6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.logo-img {
+  height: 75px;
+}
+
+.powrot-link {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #FF6600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.powrot-link:hover {
+  color: #CC5200;
+}
+
+.motocross-detail-page {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+/* Główna galeria */
+
+.galeria {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.glowny-zdjecie-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.glowny-zdjecie-wrapper img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: block;
+}
+
+.glowny-zdjecie-wrapper .arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  font-size: 20px;       /* mniejszy rozmiar */
+  padding: 6px 8px;      /* mniejszy padding */
+  cursor: pointer;
+  border-radius: 50%;
+  color: #FF6600;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.glowny-zdjecie-wrapper .arrow:hover {
+  background-color: #CC5200;
+  color: #fff;
+}
+
+.glowny-zdjecie-wrapper .arrow.left {
+  left: 5px;             /* bliżej lewej krawędzi */
+}
+
+.glowny-zdjecie-wrapper .arrow.right {
+  right: 5px;            /* bliżej prawej krawędzi */
+}
+
+.glowny-zdjecie-wrapper .arrow:hover {
+  background-color: #ddd;
+}
+
+/* Miniaturki */
+
+.miniaturki {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.thumb {
+  width: 70px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0.7;
+  border: 2px solid transparent;
+  transition: opacity 0.3s ease, border-color 0.3s ease;
+}
+
+.thumb.active,
+.thumb:hover {
+  opacity: 1;
+  border-color: #FF6600;
+}
+
+/* Opis maszyny */
+
+.opis-szczegolowy {
+  display: flex;
+  flex-direction: column;
+}
+
+.opis-szczegolowy h1 {
+  color: #FF6600;
+  font-size: 2.4rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.opis-szczegolowy p {
+  font-size: 1.1rem;
+  margin: 8px 0;
+  color: #444;
+}
+
+.opis-maszyny {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+.cena {
+  font-weight: 700;
+  font-size: 2rem;
+  color: #FF6600;
+  background-color: #FFE5CC;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(255, 102, 0, 0.3);
+  margin: 30px 0;
+  width: fit-content;
+  user-select: none;
+}
+
+/* Przycisk kontaktowy */
+
+.kontakt-btn {
+  background-color: #FF6600;
+  border: none;
+  padding: 15px 30px;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: fit-content;
+}
+
+.kontakt-btn:hover {
+  background-color: #CC5200;
+}
+
+/* Modal kontaktowy */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease;
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-bottom: 15px;
+  color: #FF6600;
+}
+
+.modal-content a {
+  color: #FF6600;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.modal-content a:hover {
+  text-decoration: underline;
+}
+
+.close {
+  position: absolute;
+  top: 20px; right: 25px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Responsywność */
+
+@media (max-width: 900px) {
+  .motocross-detail-page {
+    grid-template-columns: 1fr;
+  }
+
+  .glowny-zdjecie img {
+    max-height: 300px;
+    object-fit: contain;
+  }
+
+  .glowny-zdjecie-wrapper .arrow {
+    font-size: 24px;
+    padding: 8px;
+  }
+
+  .thumb {
+    width: 60px;
+    height: 45px;
+  }
+}
