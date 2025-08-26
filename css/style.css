@@ -198,7 +198,7 @@ nav a:hover {
 
 .slider-item:hover {
   transform: translateY(-8px);
-  box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 12px rgba(255,69,0,0.6);
 }
 
 .slider-item img {
@@ -287,88 +287,33 @@ nav a:hover {
 
 /* SEKCJA OFERTA */
 .oferta {
-  background: #eae6e1; /* subtelny jasny kremowy szary */
-  padding: 60px 20px;
-}
-
-.oferta h2 {
+  background: white; /* subtelny jasny kremowy szary */
+  padding: 160px 20px 260px 20px;
   text-align: center;
-  margin-bottom: 40px;
-  font-weight: 700;
-  color: #FF4500;
 }
 
-.oferta h3 {
-  font-weight: 700;
-  color: #FF6600;
-}
-
-.oferta h3:hover {
-  color: #FF4500;
-}
-
-/* Ustawienie kafelków pionowo oraz dodanie strzałki po lewej */
-.oferta-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 50px;
-  justify-items: center;
-  max-width: 1200px; /* lub inna szerokość odpowiednia do projektu */
-  margin: 0 auto;
-}
-
-.oferta-item {
-  position: relative;
-  padding: 20px 20px 20px 70px; /* zwiększony padding po lewej na strzałkę */
-  background: #dad6d1;
-  border-radius: 8px;
-  text-align: left;
-  width: 100%;
-  cursor: default;
-  transition: transform 0.3s;
-}
-
-.oferta-item:hover {
-  transform: scale(1.03);
-}
-
-/* Strzałka po lewej */
-.oferta-item .arrow {
-  position: absolute;
-  left: 20px; /* wcześniej było -50px, teraz wewnątrz kafelka */
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23FF6600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M9.29 6.71a1 1 0 011.42 0L15 11l-4.29 4.29a1 1 0 01-1.42-1.42L12.17 12 9.29 9.12a1 1 0 010-1.41z"/></svg>');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  transition: background-color 0.3s;
-}
-
-.oferta-item:hover .arrow {
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23FF4500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M9.29 6.71a1 1 0 011.42 0L15 11l-4.29 4.29a1 1 0 01-1.42-1.42L12.17 12 9.29 9.12a1 1 0 010-1.41z"/></svg>');
-}
-
-/* Oferta item images */
-.oferta-item img {
-  width: 400px;
-  height: 310px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 10px;
-}
-
-.oferta-link {
+.hero-btn-oferta {
+  display: inline-block;
+  background-color: #FF6600; 
+  color: white;
+  padding: 20px 54px;
+  border-radius: 12px;
+  margin:auto;
   text-decoration: none;
-  color: inherit;
-  display: block;
+  font-weight: 700;
+  font-size:55px;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
 }
 
-.oferta-link .oferta-item {
+.hero-btn-oferta:hover {
+  background-color: #FF4500;
   cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,015);
+  transform: translateY(-8px);
 }
+
+
 
 /* SEKCJA KONTAKT */
 .kontakt {
@@ -427,9 +372,179 @@ nav a:hover {
   display: block;
 }
 
+/* Scroll to top button */
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: white;
+  color: #FF6600;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid #FF6600;
+  box-shadow: 0 0 0 transparent;
+  text-decoration: none;
+}
+
+.scroll-to-top:hover {
+  box-shadow: 0 0 12px #FF6600;
+  background-color: #fff;
+}
+
+.scroll-to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Import na zamówienie */
+.import {
+  background-color: #fff8f4; /* delikatne, ciepłe wyróżnienie */
+  padding: 100px 20px;
+  margin: 60px auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.import-content-flex {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.import-text {
+  flex: 1 1 520px;
+}
+
+.import-text h2 {
+  font-size: 38px;
+  margin-bottom: 24px;
+  font-weight: 700;
+  color: #FF4500;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+
+.import-text p {
+  font-size: 20px;
+  line-height: 1.7;
+  margin-bottom: 50px;
+  color: #555;
+  font-weight: 500;
+  max-width: 720px;
+}
+
+.hero-btn-import {
+  display: inline-block;
+  background-color: #FF6600;
+  color: white;
+  padding: 18px 44px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 24px;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.hero-btn-import:hover {
+  background-color: #FF4500;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transform: translateY(-6px);
+}
+
+.import-image {
+  flex: 1 1 420px;
+  text-align: center;
+}
+
+.import-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+/* Transport sekcja */
+.container-transport {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+
+.transport {
+  background-color: white; /* spójne z sekcją import */
+  padding: 80px 20px;
+  margin: 60px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.transport-title {
+  font-size: 38px;
+  font-weight: 700;
+  color: #FF4500;
+  margin-bottom: 24px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+
+.transport-text {
+  font-size: 20px;
+  line-height: 1.7;
+  color: #555;
+  font-weight: 500;
+  max-width: 980px;
+  margin: 0 auto 40px auto;
+}
+
+.transport-text strong {
+  color: #FF6600;
+}
+
+.transport-list {
+  list-style: none;
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.transport-list li {
+  font-size: 18px;
+  margin-bottom: 16px;
+  padding-left: 32px;
+  position: relative;
+  color: #3a3a36;
+  font-weight: 500;
+}
+
+.transport-list li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #FF6600;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1;
+}
+
 /* Formularz kontaktowy */
 form#contactForm {
-  max-width: 480px;
+  max-width: 780px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -497,6 +612,33 @@ form#contactForm button:hover {
   .kontakt-container {
     flex-direction: column;
     max-width: 90%;
+  }
+
+  .import-content-flex {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .import-text,
+  .import-image {
+    flex: 1 1 100%;
+  }
+
+  .import-text h2 {
+    font-size: 28px;
+  }
+
+  .import-text p {
+    font-size: 16px;
+  }
+
+  .hero-btn-import {
+    font-size: 18px;
+    padding: 14px 30px;
+  }
+
+  .import-image {
+    margin-top: 30px;
   }
 }
 
