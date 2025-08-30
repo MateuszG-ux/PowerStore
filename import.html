@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Import na zamówienie | Twoja Firma</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/import.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+   <header>
+    <div class="container header-container">
+      <a href="index.html">
+      <img src="img/logo.png" alt="PowerStore logo" class="logo-img" />
+      </a>
+      <nav>
+        <ul>
+        <li><a href="index.html" class="powrot-link">← Powrót</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="import-hero">
+    <div class="container">
+      <h1>Import na zamówienie</h1>
+      <p>Indywidualne sprowadzanie towarów z całego świata – bezpośrednio dla Ciebie.</p>
+    </div>
+  </section>
+
+  <section class="import-details">
+    <div class="container import-flex">
+      <div class="import-text">
+        <h2>Co oferujemy?</h2>
+        <p>
+          Sprowadzamy towary na indywidualne zamówienie klienta – niezależnie od branży. Obsługujemy całą procedurę: od wyszukania produktu, przez transport, aż po dostarczenie do drzwi.
+        </p>
+        <ul>
+          <li>✅ Wyszukiwanie sprawdzonych dostawców</li>
+          <li>✅ Obsługa dokumentów celnych</li>
+          <li>✅ Szybka i bezpieczna dostawa</li>
+          <li>✅ Doradztwo i wycena przed importem</li>
+        </ul>
+        <!-- MODAL -->
+         <a href="#" class="hero-btn-import" onclick="openModal()">Skontaktuj się z nami</a>
+  <div id="contactModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Kontakt</h2>
+      <p><strong>Telefon:</strong> <a href="tel:+48735967406">+48 735 967 406</a></p>
+      <p><strong>Email:</strong> <a href="mailto:powerstore@op.pl">powerstore@op.pl</a></p>
+    </div>
+  </div>
+      </div>
+      <div class="import-image">
+        <img src="img/import-box.png" alt="Ilustracja importu">
+      </div>
+    </div>
+  </section>
+
+  <footer>
+  <div class="footer-container">
+    <div class="footer-column">
+      <h3>Menu</h3>
+      <ul>
+        <li><a href="#start">Start</a></li>
+        <li><a href="#galeria">Aktualności</a></li>
+        <li><a href="#o-nas">O nas</a></li>
+        <li><a href="#oferta">Magazyn</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h3>Oferta</h3>
+      <ul>
+        <li><a href="oferta.html">Sprawdź naszą ofertę!</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h3>Godziny kontaktu</h3>
+      <p>Poniedziałek - Sobota</p>
+      <p>8:00 - 20:00</p>
+    </div>
+
+    <div class="footer-column">
+      <h3>Znajdź nas</h3>
+      <div class="footer-social">
+        <a href="https://powerstore.otomoto.pl/inventory" target="_blank" rel="noopener" aria-label="Otomoto">
+          Otomoto.pl
+        </a>
+        <a href="https://www.instagram.com/powerstore.motocykle/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="social-icon"><path d="M7.75 2h8.5C19.545 2 22 4.455 22 7.75v8.5c0 3.295-2.455 5.75-5.75 5.75h-8.5C4.455 22 2 19.545 2 16.25v-8.5C2 4.455 4.455 2 7.75 2zm0 2C5.955 4 4 5.955 4 7.75v8.5c0 1.795 1.955 3.75 3.75 3.75h8.5c1.795 0 3.75-1.955 3.75-3.75v-8.5c0-1.795-1.955-3.75-3.75-3.75h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6zm5.25-.25a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0z"/></svg>
+        </a>
+        <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="social-icon"><path d="M22 12c0-5.522-4.477-10-10-10S2 6.478 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987H7.898v-2.89h2.54V9.845c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.466h-1.26c-1.243 0-1.63.772-1.63 1.562v1.875h2.773l-.443 2.89h-2.33v6.987C18.343 21.128 22 16.991 22 12z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    &copy; 2025 PowerStore. Wszelkie prawa zastrzeżone. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Projekt i realizacja: M&G Web Development Agency
+  </div>
+</footer>
+<script>
+function openModal() {
+  document.getElementById('contactModal').style.display = 'block';
+}
+
+function closeModal() {
+  document.getElementById('contactModal').style.display = 'none';
+}
+
+// Zamknij modal po kliknięciu poza okienko
+window.onclick = function(event) {
+  var modal = document.getElementById('contactModal');
+  if (event.target == modal) {
+    modal.style.display = 'none';
+  }
+}
+</script>
+  <script src="js/script.js"></script>
+</body>
+</html>
